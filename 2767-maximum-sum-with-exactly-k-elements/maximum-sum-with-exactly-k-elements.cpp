@@ -1,9 +1,12 @@
 class Solution {
 public:
     int maximizeSum(vector<int>& nums, int k) {
-        sort(nums.begin(), nums.end());
+        int maxNum = 0;
 
-        int maxNum = nums[nums.size() - 1];
+        for(int i = 0; i < nums.size(); i++) {
+            maxNum = max(maxNum, nums[i]);
+        }
+
         int maxSum = 0;
 
         while(k > 0) {
