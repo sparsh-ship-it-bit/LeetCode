@@ -1,29 +1,32 @@
 class Solution {
 public:
-    int fourSumCount(vector<int>& nums1, vector<int>& nums2, vector<int>& nums3, vector<int>& nums4) {
-        unordered_map<int,int>mp1;
-        int sum = 0;
-        for(int i=0; i<nums1.size(); i++){
-            for(int j=0; j<nums1.size(); j++){
-                sum = nums1[i]+nums2[j];
-                mp1[sum]++;
+    int fourSumCount(vector<int>& nums1, vector<int>& nums2,
+                     vector<int>& nums3, vector<int>& nums4) {
+
+        unordered_map<int, int> mp;
+
+        // Store frequency of every nums1 + nums2 sum
+        for (int a : nums1) {
+            for (int b : nums2) {
+                mp[a + b]++;
             }
-            
         }
 
         int ans = 0;
 
-        for(int i=0; i<nums1.size(); i++){
-            for(int j=0; j<nums1.size(); j++){
-                sum = nums3[i]+nums4[j];
-                if(mp1.find(-sum)!=mp1.end()){
-                   ans+=mp1[-sum];
+        // Find the required opposite sum
+        for (int c : nums3) {
+            for (int d : nums4) {
+                int sum = c + d;
+
+                auto it = mp.find(-sum);
+
+                if (it != mp.end()) {
+                    ans += it->second;
                 }
             }
-            
         }
 
-      return ans;
-
+        return ans;
     }
 };
