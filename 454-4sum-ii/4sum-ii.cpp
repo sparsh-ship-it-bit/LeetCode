@@ -4,22 +4,19 @@ public:
                      vector<int>& nums3, vector<int>& nums4) {
 
         unordered_map<int, int> mp;
+        mp.reserve(nums1.size() * nums2.size());
 
-        // Store frequency of every nums1 + nums2 sum
         for (int a : nums1) {
             for (int b : nums2) {
-                mp[a + b]++;
+                ++mp[a + b];
             }
         }
 
         int ans = 0;
 
-        // Find the required opposite sum
         for (int c : nums3) {
             for (int d : nums4) {
-                int sum = c + d;
-
-                auto it = mp.find(-sum);
+                auto it = mp.find(-(c + d));
 
                 if (it != mp.end()) {
                     ans += it->second;
