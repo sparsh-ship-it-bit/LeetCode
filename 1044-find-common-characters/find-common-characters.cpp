@@ -1,25 +1,25 @@
 class Solution {
 public:
     vector<string> commonChars(vector<string>& words) {
-        unordered_map<char, unordered_map<int, int>> mp;
         vector<string> result;
+        vector<int> mp(26, INT_MAX);
 
-        for (int i = 0; i < words.size(); i++) {
-            for (auto c : words[i]) {
-                mp[c][i]++;
+        for (auto& word : words) {
+            vector<int> freq(26, 0);
+
+            for (char c : word) {
+                freq[c - 'a']++;
+            }
+
+            for (int i = 0; i < 26; i++) {
+                mp[i] = min(mp[i], freq[i]);
             }
         }
 
-        for (auto x : mp) {
-            int mini = INT_MAX;
-
-            for (int i = 0; i < words.size(); i++) {
-                int freq = x.second.count(i) ? x.second.at(i) : 0;
-                mini = min(mini, freq);
-            }
-
-            while (mini--) {
-                result.push_back(string(1, x.first));
+        for (int i = 0; i < 26; i++) {
+            while (mp[i] > 0) {
+                result.push_back(string(1, 'a' + i));
+                mp[i]--;
             }
         }
 
